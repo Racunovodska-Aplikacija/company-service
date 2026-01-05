@@ -11,6 +11,7 @@ Company and Product management service for the RAC application with REST API and
 ## Entities
 
 ### Company
+
 - `id` (UUID, Primary Key)
 - `userId` (UUID, Foreign Key)
 - `companyName` (String, Required)
@@ -31,6 +32,7 @@ Company and Product management service for the RAC application with REST API and
 - `updatedAt` (Timestamp)
 
 ### Product
+
 - `id` (UUID, Primary Key)
 - `companyId` (UUID, Foreign Key to Company)
 - `name` (String, Required)
@@ -48,14 +50,19 @@ All endpoints require JWT authentication.
 ### Company Management (Protected)
 
 #### Get All Companies (with products)
+
 ```
 GET /companies
 ```
+
 **Headers:**
+
 ```
 Authorization: Bearer {jwt-token}
 ```
+
 **Response:**
+
 ```json
 [
   {
@@ -81,7 +88,7 @@ Authorization: Bearer {jwt-token}
         "name": "Product Name",
         "cost": 99.99,
         "measuringUnit": "pcs",
-        "ddvPercentage": 22.00,
+        "ddvPercentage": 22.0,
         "createdAt": "2026-01-05T10:00:00Z",
         "updatedAt": "2026-01-05T10:00:00Z"
       }
@@ -93,15 +100,19 @@ Authorization: Bearer {jwt-token}
 ```
 
 #### Get Company by ID (with products)
+
 ```
 GET /companies/:id
 ```
 
 #### Create Company
+
 ```
 POST /companies
 ```
+
 **Request Body:**
+
 ```json
 {
   "companyName": "My Company Ltd.",
@@ -121,20 +132,25 @@ POST /companies
 ```
 
 #### Update Company
+
 ```
 PUT /companies/:id
 ```
+
 **Request Body:** Same as Create Company
 
 #### Delete Company
+
 ```
 DELETE /companies/:id
 ```
 
 #### Search Companies (Cebelca API)
+
 ```
 GET /companies/search/cebelca?q={query}
 ```
+
 External API integration for company search.
 
 ### Product Management (Protected)
@@ -142,41 +158,50 @@ External API integration for company search.
 All product endpoints are nested under companies.
 
 #### Get All Products for a Company
+
 ```
 GET /companies/:companyId/products
 ```
 
 #### Get Product by ID
+
 ```
 GET /companies/:companyId/products/:productId
 ```
 
 #### Create Product
+
 ```
 POST /companies/:companyId/products
 ```
+
 **Request Body:**
+
 ```json
 {
   "name": "Product Name",
   "cost": 99.99,
   "measuringUnit": "pcs",
-  "ddvPercentage": 22.00
+  "ddvPercentage": 22.0
 }
 ```
 
 #### Update Product
+
 ```
 PUT /companies/:companyId/products/:productId
 ```
+
 **Request Body:** Same as Create Product
 
 #### Delete Product
+
 ```
 DELETE /companies/:companyId/products/:productId
 ```
 
 ### Health Check
+
 ```
 GET /health
 ```
@@ -193,6 +218,7 @@ Both services run on the same gRPC server.
 Retrieve a single company by ID.
 
 **Proto Definition:**
+
 ```protobuf
 service CompanyService {
   rpc GetCompany(GetCompanyRequest) returns (GetCompanyResponse);
@@ -229,6 +255,7 @@ message GetCompanyResponse {
 Retrieve multiple products by their IDs (bulk operation).
 
 **Proto Definition:**
+
 ```protobuf
 service ProductService {
   rpc GetProducts(GetProductsRequest) returns (GetProductsResponse);
