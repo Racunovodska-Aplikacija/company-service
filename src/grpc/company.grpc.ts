@@ -3,6 +3,7 @@ import * as protoLoader from '@grpc/proto-loader';
 import { AppDataSource } from '../config/data-source';
 import { Company } from '../entities/Company';
 import { Product } from '../entities/Product';
+import { In } from 'typeorm';
 import path from 'path';
 
 // Load proto files
@@ -103,7 +104,7 @@ export const getProducts = async (
 
         const productRepo = AppDataSource.getRepository(Product);
         const products = await productRepo.find({
-            where: { id: ids },
+            where: { id: In(ids) },
         });
 
         const productResponses = products.map(product => ({
