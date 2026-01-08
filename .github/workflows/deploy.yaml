@@ -3,7 +3,7 @@ name: Build & Deploy Company Service
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   IMAGE_NAME: vidkal/company-service
