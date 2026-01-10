@@ -25,15 +25,15 @@ app.use('/companies', companyRoutes);
 
 // Swagger setup
 const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Company Service API',
-      version: '1.0.0',
-      description: 'API documentation for Company Service',
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Company Service API',
+            version: '1.0.0',
+            description: 'API documentation for Company Service',
+        },
     },
-  },
-  apis: ['./dist/routes/*.js'], // Point to compiled JavaScript files
+    apis: ['./dist/routes/*.js'], // Point to compiled JavaScript files
 };
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 app.use('/company-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
