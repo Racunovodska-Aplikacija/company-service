@@ -6,6 +6,9 @@ import { initializeDatabase } from './config/database';
 import companyRoutes from './routes/company.routes';
 import { startGrpcServer } from './grpc/company.grpc';
 
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const GRPC_PORT = process.env.GRPC_PORT ? parseInt(process.env.GRPC_PORT) : 50051;
@@ -19,6 +22,21 @@ app.use(cors({
 }));
 
 app.use('/companies', companyRoutes);
+
+// Swagger setup
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Company Service API',
+      version: '1.0.0',
+      description: 'API documentation for Company Service',
+    },
+  },
+  apis: ['./dist/routes/*.js'], // Point to compiled JavaScript files
+};
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use('/company-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok' });
